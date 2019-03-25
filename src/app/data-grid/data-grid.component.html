@@ -1,0 +1,135 @@
+<!-- <mat-form-field>
+    <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Filter"
+    >
+</mat-form-field> -->
+
+<pre>{{ data$ | async | json }}</pre>
+
+<div class="mat-elevation-z8">
+    <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+    >
+
+        <!-- City Column -->
+        <ng-container matColumnDef="city">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+            >
+                City
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let row"
+            >
+                {{row.city}}
+            </td>
+        </ng-container>
+
+        <!-- Start Date Column -->
+        <ng-container matColumnDef="startDate">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+            >
+                Start Date
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let row"
+            >
+                {{row.start_date}}%
+            </td>
+        </ng-container>
+
+        <!-- End Date Column -->
+        <ng-container matColumnDef="endDate">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+            >
+                End Date
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let row"
+            >
+                {{row.end_date}}%
+            </td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+            >
+                Price
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let row"
+            >
+                {{row.price}}
+            </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+            >
+                Status
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let row"
+            >
+                {{row.status}}
+            </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="color">
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+            >
+                Color
+            </th>
+            <td
+                mat-cell
+                *matCellDef="let row"
+                [style.color]="row.color"
+            >
+                {{row.color}}
+            </td>
+        </ng-container>
+
+        <tbody>
+            <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumns"
+            ></tr>
+            <tr
+                mat-row
+                *matRowDef="let row; columns: displayedColumns;"
+            >
+            </tr>
+        </tbody>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
