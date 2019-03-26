@@ -8,9 +8,10 @@ import { AngularMaterialModule } from './angular-material.module';
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
-    declarations: [ AppComponent, DataGridComponent ],
+    declarations: [ AppComponent, DataGridComponent, SignupComponent ],
     imports: [
         BrowserModule,
         AppRoutingModule,

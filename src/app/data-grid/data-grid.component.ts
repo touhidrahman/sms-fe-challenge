@@ -2,8 +2,8 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSort } from '@angular/material';
 import { merge, tap } from 'rxjs/operators';
-import { DataService } from 'src/_shared/services/data.service';
 import { RecordDataSource } from './record-data-source';
+import { DataService } from '../_shared/services/data.service';
 
 @Component({
     selector: 'app-data-grid',

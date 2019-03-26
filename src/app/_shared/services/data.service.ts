@@ -1,21 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { DataRecord } from '../app.types';
-import { map, filter, tap } from 'rxjs/operators';
+import { DataRecord, RawRecord } from '../app.types';
 
 const API_URL = environment.apiUrl + '/data';
-
-interface RawRecord {
-    id: string | number;
-    city: string;
-    color: string;
-    status: string;
-    start_date: string;
-    end_date: string;
-    price: string;
-}
 
 @Injectable({
     providedIn: 'root',

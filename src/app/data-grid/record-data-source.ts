@@ -1,8 +1,8 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { DataRecord } from 'src/_shared/app.types';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { DataService } from 'src/_shared/services/data.service';
 import { catchError, finalize } from 'rxjs/operators';
+import { DataRecord } from '../_shared/app.types';
+import { DataService } from '../_shared/services/data.service';
 
 export class RecordDataSource implements DataSource<DataRecord> {
     private subject = new BehaviorSubject<Array<DataRecord>>([]);
