@@ -7,6 +7,16 @@ import { map, filter, tap } from 'rxjs/operators';
 
 const API_URL = environment.apiUrl + '/data';
 
+interface RawRecord {
+    id: string | number;
+    city: string;
+    color: string;
+    status: string;
+    start_date: string;
+    end_date: string;
+    price: string;
+}
+
 @Injectable({
     providedIn: 'root',
 })
@@ -20,12 +30,11 @@ export class DataService {
         isDescOrder = false,
     ): Observable<Array<DataRecord>> {
         return this.http
-            .get<Array<any>>(API_URL)
+            .get<Array<RawRecord>>(API_URL)
             .pipe(
                 map((data) => data.map((record) => this.transform(record))),
                 map((data) => this.getFilteredData(data, startDate, endDate)),
                 map((data) => this.sortRecords(data, compareBy, isDescOrder)),
-                tap((data) => console.log(data.length)),
             );
     }
 
@@ -35,12 +44,15 @@ export class DataService {
             .pipe(map((record) => this.transform(record)));
     }
 
+    /**
+     * Filter records by date range
+     */
     private getFilteredData(
         data: Array<DataRecord>,
         startDate: Date,
         endDate: Date,
     ): Array<DataRecord> {
-        const filteredData = data.filter((record) => {
+        return data.filter((record) => {
             if (startDate && endDate) {
                 return (
                     record.start_date.getTime() >= startDate.getTime() &&
@@ -54,10 +66,14 @@ export class DataService {
                 return true;
             }
         });
-
-        return filteredData;
     }
 
+    /**
+     * Dealing sorting from the frontend, normally should be done in the backend.
+     * We have dates inside the object which is in string format. So the mock server
+     * cannot sort the date logically. This method handles date sorting effectively
+     * along with sorting of other fields.
+     */
     private sortRecords(
         data: Array<DataRecord>,
         compareBy: string,
@@ -117,6 +133,10 @@ export class DataService {
         return data.sort(sortFunc);
     }
 
+    /**
+     * The date strings are in US format. So we convert them to JS date object
+     * for better sorting and feeding into date pipe.
+     */
     private toDate(dateStr: string): Date {
         const [ month, day, year ] = dateStr.split('/');
         return new Date(
@@ -126,7 +146,11 @@ export class DataService {
         );
     }
 
-    private transform(record: any): DataRecord {
+    /**
+     * Transform the record object from the server (or data.json) into
+     * correctly typecasted object (i.e- date to JS date, price to number)
+     */
+    private transform(record: RawRecord): DataRecord {
         return {
             ...record,
             start_date: this.toDate(record.start_date),

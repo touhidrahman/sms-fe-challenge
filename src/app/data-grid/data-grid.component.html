@@ -1,31 +1,34 @@
 <div class="date-pickers">
-    <mat-form-field>
-        <input
-            matInput
-            [formControl]="dateStart"
-            [matDatepicker]="pickerStart"
-            placeholder="Choose a start date"
-        >
-        <mat-datepicker-toggle
-            matSuffix
-            [for]="pickerStart"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #pickerStart></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field>
-        <input
-            matInput
-            [formControl]="dateEnd"
-            [matDatepicker]="pickerEnd"
-            placeholder="Choose an end date"
-        >
-        <mat-datepicker-toggle
-            matSuffix
-            [for]="pickerEnd"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #pickerEnd></mat-datepicker>
-    </mat-form-field>
+    <div>
+        <mat-form-field>
+            <input
+                matInput
+                [formControl]="dateStart"
+                [matDatepicker]="pickerStart"
+                placeholder="Choose a start date"
+            >
+            <mat-datepicker-toggle
+                matSuffix
+                [for]="pickerStart"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #pickerStart></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <input
+                matInput
+                [formControl]="dateEnd"
+                [matDatepicker]="pickerEnd"
+                placeholder="Choose an end date"
+            >
+            <mat-datepicker-toggle
+                matSuffix
+                [for]="pickerEnd"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd></mat-datepicker>
+        </mat-form-field>
+    </div>
 </div>
 
 <div class="data-grid">

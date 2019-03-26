@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { DataRecord } from 'src/_shared/app.types';
-import { DataService } from 'src/_shared/services/data.service';
-import { Observable, concat } from 'rxjs';
-import { tap, merge } from 'rxjs/operators';
-import { RecordDataSource } from './record-data-source';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatSort } from '@angular/material';
+import { merge, tap } from 'rxjs/operators';
+import { DataService } from 'src/_shared/services/data.service';
+import { RecordDataSource } from './record-data-source';
 
 @Component({
     selector: 'app-data-grid',
@@ -33,7 +31,7 @@ export class DataGridComponent implements OnInit, AfterViewInit {
         this.dateEnd = new FormControl();
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.dataSource = new RecordDataSource(this.dataService);
         this.loadRecords();
 
@@ -42,11 +40,11 @@ export class DataGridComponent implements OnInit, AfterViewInit {
             .subscribe((value) => this.loadRecords());
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.sort.sortChange.pipe(tap(() => this.loadRecords())).subscribe();
     }
 
-    loadRecords() {
+    loadRecords(): void {
         this.dataSource.loadRecords(
             this.dateStart.value, // start date
             this.dateEnd.value, // end date
@@ -54,6 +52,4 @@ export class DataGridComponent implements OnInit, AfterViewInit {
             this.sort.direction || 'asc', // order
         );
     }
-
-    applyFilter(event) {}
 }
