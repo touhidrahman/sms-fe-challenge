@@ -21,11 +21,17 @@ export class RecordDataSource implements DataSource<DataRecord> {
         this.loadingSubject.complete();
     }
 
-    loadRecords() {
+    loadRecords(
+        startDate: Date,
+        endDate: Date,
+        sortBy = 'city',
+        order = 'asc',
+    ) {
         this.loadingSubject.next(true);
+        const isDescOrder = order === 'asc' ? false : true;
 
         this.dataService
-            .getData()
+            .getData(startDate, endDate, sortBy, isDescOrder)
             .pipe(
                 catchError(() => of([])),
                 finalize(() => this.loadingSubject.next(false)),

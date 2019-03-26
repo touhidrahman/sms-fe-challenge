@@ -11,31 +11,21 @@ const API_URL = environment.apiUrl + '/data';
     providedIn: 'root',
 })
 export class DataService {
-    private recordsSubject = new BehaviorSubject<Array<DataRecord>>([]);
-    private data: Array<DataRecord> = [];
+    constructor(private http: HttpClient) {}
 
-    constructor(private http: HttpClient) {
-        this.getData();
-    }
-
-    getData(): Observable<Array<DataRecord>> {
-        return this.http.get<Array<any>>(API_URL).pipe(
-            map((data) => {
-                return data.map((record) => this.transform(record));
-            }),
-        );
-    }
-
-    getDataWithFilter(
+    getData(
         startDate: Date,
         endDate: Date = new Date(),
+        compareBy: string,
+        isDescOrder = false,
     ): Observable<Array<DataRecord>> {
-        return this.http.get<Array<any>>(API_URL).pipe(
-            map((data) => {
-                return data.map((record) => this.transform(record));
-            }),
-            map((data) => this.getFilteredData(data, startDate, endDate)),
-        );
+        return this.http
+            .get<Array<any>>(API_URL)
+            .pipe(
+                map((data) => data.map((record) => this.transform(record))),
+                map((data) => this.getFilteredData(data, startDate, endDate)),
+                map((data) => this.sortRecords(data, compareBy, isDescOrder)),
+            );
     }
 
     getDataById(id: string | number): Observable<DataRecord> {
@@ -65,6 +55,65 @@ export class DataService {
         });
 
         return filteredData;
+    }
+
+    private sortRecords(
+        data: Array<DataRecord>,
+        compareBy: string,
+        isDescOrder = false,
+    ): Array<DataRecord> {
+        let sortFunc;
+
+        switch (compareBy) {
+            case 'city':
+            case 'color':
+            case 'status':
+                sortFunc = (a: DataRecord, b: DataRecord) => {
+                    if (
+                        a[compareBy].toLowerCase() < b[compareBy].toLowerCase()
+                    ) {
+                        return isDescOrder ? 1 : -1;
+                    } else if (
+                        a[compareBy].toLowerCase() > b[compareBy].toLowerCase()
+                    ) {
+                        return isDescOrder ? -1 : 1;
+                    } else {
+                        return 0;
+                    }
+                };
+                break;
+            case 'price':
+                sortFunc = (a: DataRecord, b: DataRecord) => {
+                    if (a[compareBy] < b[compareBy]) {
+                        return isDescOrder ? 1 : -1;
+                    } else if (a[compareBy] > b[compareBy]) {
+                        return isDescOrder ? -1 : 1;
+                    } else {
+                        return 0;
+                    }
+                };
+                break;
+            case 'start_date':
+            case 'end_date':
+                sortFunc = (a: DataRecord, b: DataRecord) => {
+                    if (a[compareBy].getTime() < b[compareBy].getTime()) {
+                        return isDescOrder ? 1 : -1;
+                    } else if (
+                        a[compareBy].getTime() > b[compareBy].getTime()
+                    ) {
+                        return isDescOrder ? -1 : 1;
+                    } else {
+                        return 0;
+                    }
+                };
+                break;
+
+            default:
+                sortFunc = (a: DataRecord, b: DataRecord) => 0;
+                break;
+        }
+
+        return data.sort(sortFunc);
     }
 
     private toDate(dateStr: string): Date {

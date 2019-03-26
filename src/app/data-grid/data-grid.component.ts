@@ -14,39 +14,34 @@ import { RecordDataSource } from './record-data-source';
 export class DataGridComponent implements OnInit, AfterViewInit {
     displayedColumns: string[] = [
         'city',
-        'startDate',
-        'endDate',
+        'start_date',
+        'end_date',
         'price',
         'status',
         'color',
     ];
     dataSource: RecordDataSource;
 
-    data$: Observable<Array<DataRecord>>;
-    data: Array<DataRecord>;
-
-    @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
     constructor(private dataService: DataService) {}
 
     ngOnInit() {
-        this.data$ = this.dataService.getDataWithFilter(
-            new Date(2015, 4, 13),
-            new Date(2015, 7, 12),
-        );
-        // this.data$.subscribe();
-
         this.dataSource = new RecordDataSource(this.dataService);
-        this.dataSource.loadRecords();
+        this.loadRecords();
     }
 
     ngAfterViewInit() {
-        // this.dataSource = new MatTableDataSource(this.data);
+        this.sort.sortChange.pipe(tap(() => this.loadRecords())).subscribe();
+    }
 
-        this.sort.sortChange
-            .pipe(tap(() => this.dataSource.loadRecords()))
-            .subscribe();
+    loadRecords() {
+        this.dataSource.loadRecords(
+            undefined, // start date
+            undefined, // end date
+            this.sort.active || 'city', // sort by
+            this.sort.direction || 'asc', // order
+        );
     }
 
     applyFilter(event) {}

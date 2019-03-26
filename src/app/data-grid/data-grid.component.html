@@ -6,8 +6,6 @@
     >
 </mat-form-field> -->
 
-<pre>{{ data$ | async | json }}</pre>
-
 <div class="data-grid">
     <div
         class="spinner-container"
@@ -43,7 +41,7 @@
         </ng-container>
 
         <!-- Start Date Column -->
-        <ng-container matColumnDef="startDate">
+        <ng-container matColumnDef="start_date">
             <th
                 mat-header-cell
                 *matHeaderCellDef
@@ -60,7 +58,7 @@
         </ng-container>
 
         <!-- End Date Column -->
-        <ng-container matColumnDef="endDate">
+        <ng-container matColumnDef="end_date">
             <th
                 mat-header-cell
                 *matHeaderCellDef
