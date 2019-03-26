@@ -25,6 +25,7 @@ export class DataService {
                 map((data) => data.map((record) => this.transform(record))),
                 map((data) => this.getFilteredData(data, startDate, endDate)),
                 map((data) => this.sortRecords(data, compareBy, isDescOrder)),
+                tap((data) => console.log(data.length)),
             );
     }
 

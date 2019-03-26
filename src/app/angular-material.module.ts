@@ -7,6 +7,9 @@ import {
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatSortModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
 } from '@angular/material';
 
 @NgModule({
@@ -18,6 +21,9 @@ import {
         MatPaginatorModule,
         MatProgressSpinnerModule,
         MatSortModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatInputModule,
     ],
     exports: [
         MatButtonModule,
@@ -27,6 +33,9 @@ import {
         MatPaginatorModule,
         MatProgressSpinnerModule,
         MatSortModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatInputModule,
     ],
 })
 export class AngularMaterialModule {}

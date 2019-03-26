@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [ AppComponent, DataGridComponent ],
@@ -16,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
         BrowserAnimationsModule,
         AngularMaterialModule,
         HttpClientModule,
+        ReactiveFormsModule,
     ],
     providers: [],
     bootstrap: [ AppComponent ],

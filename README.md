@@ -20,3 +20,5 @@ how to install and run your application.
 
 - `npm i` (Only for first time)
 - `npm start`
+- Go to `http://localhost:4200` to view the data grid
+- Go to `http://localhost:4200/signup` to view the email-password confirmation page
