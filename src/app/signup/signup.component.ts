@@ -1,11 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {
-    FormGroup,
-    FormBuilder,
-    Validators,
-    AbstractControl,
-    ValidationErrors,
-} from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /**
  * Validates two form controls within a form group whether they
@@ -27,7 +21,7 @@ function ValidateEqual(control1, control2: string) {
     templateUrl: './signup.component.html',
     styleUrls: [ './signup.component.scss' ],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
     signup: FormGroup;
 
     constructor(private formBuilder: FormBuilder) {
@@ -59,9 +53,5 @@ export class SignupComponent implements OnInit {
                 validators: ValidateEqual('password', 'confirmPassword'),
             },
         );
-    }
-
-    ngOnInit() {
-        this.signup.valueChanges.subscribe((v) => console.log(this.signup));
     }
 }
