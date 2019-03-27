@@ -1,4 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import {
+    FormGroup,
+    FormBuilder,
+    Validators,
+    AbstractControl,
+    ValidationErrors,
+} from '@angular/forms';
+
+/**
+ * Validates two form controls within a form group whether they
+ * have same value or not.
+ */
+function ValidateEqual(control1, control2: string) {
+    return (group: FormGroup) => {
+        const ctrl1 = group.controls[control1];
+        const ctrl2 = group.controls[control2];
+
+        return ctrl1.value === ctrl2.value
+            ? ctrl2.setErrors(null)
+            : ctrl2.setErrors({ notEqual: true });
+    };
+}
 
 @Component({
     selector: 'app-signup',
@@ -6,7 +28,40 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: [ './signup.component.scss' ],
 })
 export class SignupComponent implements OnInit {
-    constructor() {}
+    signup: FormGroup;
 
-    ngOnInit() {}
+    constructor(private formBuilder: FormBuilder) {
+        this.signup = this.formBuilder.group(
+            {
+                email: [
+                    '',
+                    Validators.compose([
+                        Validators.required,
+                        Validators.email,
+                    ]),
+                ],
+                password: [
+                    '',
+                    Validators.compose([
+                        Validators.required,
+                        Validators.minLength(8),
+                    ]),
+                ],
+                confirmPassword: [
+                    '',
+                    Validators.compose([
+                        Validators.required,
+                        Validators.minLength(8),
+                    ]),
+                ],
+            },
+            {
+                validators: ValidateEqual('password', 'confirmPassword'),
+            },
+        );
+    }
+
+    ngOnInit() {
+        this.signup.valueChanges.subscribe((v) => console.log(this.signup));
+    }
 }

@@ -1,3 +1,55 @@
-<p>
-  signup works!
-</p>
+<div class="signup">
+    <mat-card>
+        <mat-card-title>Signup</mat-card-title>
+
+        <mat-card-content [formGroup]="signup">
+            <div>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Email"
+                        formControlName="email"
+                    >
+                    <mat-error *ngIf="signup.get('email').hasError('required')">This field is required.</mat-error>
+                    <mat-error *ngIf="signup.get('email').hasError('email')">Please enter a valid email.</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input
+                        matInput
+                        type="password"
+                        placeholder="Password"
+                        formControlName="password"
+                    >
+                    <mat-error *ngIf="signup.get('password').hasError('required')">This field is required.</mat-error>
+                    <mat-error *ngIf="signup.get('password').hasError('minlength')">Please enter at least 8 characters.</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input
+                        matInput
+                        type="password"
+                        placeholder="Confirm Password"
+                        formControlName="confirmPassword"
+                    >
+                    <mat-error *ngIf="signup.get('confirmPassword').hasError('required')">This field is required.</mat-error>
+                    <mat-error *ngIf="signup.get('confirmPassword').hasError('notEqual')">
+                        Passwords do not match. Please try again.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </mat-card-content>
+        <mat-card-actions align="right">
+            <button
+                mat-raised-button
+                color="primary"
+                [disabled]="signup.invalid"
+            >
+                Signup
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

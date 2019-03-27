@@ -32,12 +32,11 @@
 </div>
 
 <div class="data-grid">
-    <div
-        class="spinner-container"
+
+    <mat-progress-bar
+        mode="indeterminate"
         *ngIf="dataSource.loading$ | async"
-    >
-        <mat-spinner></mat-spinner>
-    </div>
+    ></mat-progress-bar>
 
     <table
         mat-table
